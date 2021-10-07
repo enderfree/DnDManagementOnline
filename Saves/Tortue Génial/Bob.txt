@@ -1,0 +1,11 @@
+name: Bob
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+SP, 0.02, 0, 
+EP, 0.02, 0, 
+GP, 0.02, 5, 
+PP, 0.02, 0, 
+

@@ -1,0 +1,7 @@
+name: r
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+

@@ -1,0 +1,8 @@
+name: gfhg 
+pfp:  
+background:  
+font_color:  
+str: 45 
+base_speed: 3 
+desc:  
+inventories: r, re, f

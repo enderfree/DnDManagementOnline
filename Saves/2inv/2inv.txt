@@ -1,0 +1,8 @@
+name: 2inv 
+pfp:  
+background:  
+font_color:  
+str: 2 
+base_speed: 2 
+desc:  
+inventories: Inventory, now

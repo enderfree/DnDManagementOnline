@@ -1,0 +1,9 @@
+name: utyrdt
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+we, 4, 4, 
+re, 2, 3, 
+

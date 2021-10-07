@@ -1,0 +1,8 @@
+name: FireCloud
+pfp: https://i.pinimg.com/originals/bf/6c/32/bf6c32901d1a100a8f1d2b47068dae67.jpg
+background: https://i.pinimg.com/originals/7b/40/18/7b40187e5e0815e62e8ad3581fe356cc.jpg
+font_color: white
+str: 14
+base_speed: 35
+desc: 
+inventories: Inventory

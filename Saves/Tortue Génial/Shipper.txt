@@ -1,0 +1,17 @@
+name: Shipper
+image: 
+font_color: 
+max_capacity: 30
+isCarried: true
+items: 
+Messkit, 1, 1, 
+Tinderbox, 1, 1, 
+Torch, 1, 10, 
+Days of loucoum, 2, 10, 
+Waterskin, 5, 1, 
+Volley Ball, 0, 1, 
+Stitched Fur Garnment, 0, 1, 
+Journal, 0, 1, 
+Quill, 0, 1, 
+Jar of Ink, 0, 1, 
+

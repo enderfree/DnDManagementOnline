@@ -1,0 +1,8 @@
+name: wd
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+cd, 2, 2, 
+

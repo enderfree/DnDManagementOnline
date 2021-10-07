@@ -1,0 +1,6 @@
+name: Inventory 2
+image: 
+font_color: 
+max_capacity: 
+isCarried: false
+items: 

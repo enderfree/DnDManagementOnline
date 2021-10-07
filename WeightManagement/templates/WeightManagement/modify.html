@@ -1,0 +1,175 @@
+{% load static %}
+
+<!DOCTYPE html>
+     <!-- Samuel, Fauteux 
+     Description: I decided that user input would be appreciated and that django 
+	 forms, for something this complex, would not be useful so I will do as in 
+	 the previous page. 
+	 Date: 08/11/2021                 -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="shortcut icon" href=""> <!--Need to remove this when I add an icon-->
+		<title>Character Creation!</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'WeightManagement/style.css' %}">
+	</head>
+	<body>
+		{% if messages %}
+			{% for message in messages %}
+				{{ message }} <!--one day I may wan't to handle the errors-->
+			{% endfor %}  <!--on this day I may also want to make a base.html since I now have a second page-->
+		{% endif %}
+		
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset>
+				<legend>Character</legend>
+				<table>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="charName">Name: </label>
+								<span class="tooltiptext">The name of your character. </span>
+							</div>
+						</td>
+						<td><input type="text" name="charName" id="charName" value="{{character.name.strip}}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="pfp">Profile Picture: </label>
+								<span class="tooltiptext">A picture representing your character. <br/>Link only!</span>
+							</div>
+						</td>
+						<td><input type="url" name="pfp" id="pfp" value="{{character.pfp.strip}}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="charBg">Background Image: </label>
+								<span class="tooltiptext">The page background image. <br/>Link only!</span>
+							</div>
+						</td>
+						<td><input type="url" name="charBg" id="charBg" value="{{character.background.strip}}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="bodyFontColor">Font Color: </label>
+								<span class="tooltiptext">The color of the letters on the page.<br/>If let empty or with an invalid value, it defaults to black. </span>
+							</div>
+						</td>
+						<td><input type="text" name="bodyFontColor" id="bodyFontColor" value="{{character.font_color.strip}}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="str">Strength Score: </label>
+								<span class="tooltiptext">Your strength score, not modifier!</span>
+							</div>
+						</td>
+						<td><input type="text" name="str" id="str" pattern="^[0-9]+$" value="{{character.str.strip}}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tooltip">
+								<label for="speed">Base Speed: </label>
+								<span class="tooltiptext">The base speed of your character: <br/>30 for most. </span>
+							</div>
+						</td>
+						<td><input type="text" name="speed" id="speed" pattern="^[0-9]+$" value="{{character.base_speed.strip}}"/></td>
+					</tr>
+				</table>
+				<div class="tooltip">
+					<label for="charDesc">Description: </label>
+					<span class="tooltiptext">The description of your character. <br/>Your choice!</span>
+				</div>
+				<br/>
+				<textarea name="charDesc" id="charDesc" rows="4" cols="50">{{character.desc.strip}}</textarea>
+				<fieldset>
+					<legend>Inventories</legend>
+					<div id="inventories">
+						{% for inventory in character.inventories %}
+							<fieldset id="anInventory" style="display: inline">
+								<table>
+									<tr>
+										<td>
+											<div class="tooltip">
+												<label for="invName">Name: </label>
+												<span class="tooltiptext">The name of this inventory. </span>
+											</div>
+										</td>
+										<td><input type="text" name="invName" class="invName" value="{{inventory.name.strip}}"/></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="tooltip">
+												<label for="invBg">Background: </label>
+												<span class="tooltiptext">A background image for this inventory. <br/>Link only!</span>
+											</div>
+										</td>
+										<td><input type="url" name="invBg" class="invBg" value="{{inventory.background.strip}}"/><//></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="tooltip">
+												<label for="invFontColor">Font Color: </label>
+												<span class="tooltiptext">You can specify a different font color for each inventories. <br/>If let empty or with an invalid value, it will have the same color than what was defined up top. </span>
+											</div>
+										</td>
+										<td><input type="text" name="invFontColor" class="invFontColor" value="{{inventory.font_color.strip}}"/><//></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="tooltip">
+												<label for="maxCapacity">Maximum Capacity: </label>
+												<span class="tooltiptext">How much weight can this inventory bear. <br/>E.g. Backpack = 30</span>
+											</div>
+										</td>
+										<td><input type="text" name="maxCapacity" class="maxCapacity" pattern="\[0-9]*" value="{{inventory.max_capacity.strip}}"/><//></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="tooltip">
+												<label for="isCarried">Is carried? </label>
+												<span class="tooltiptext">Does the character carry this inventory right now? <br/>true for yes, anything else for false</span>
+											</div>
+										</td><!--unchecked checkbox simply doesn't return, I need a consistent return
+												Maybe I will eventually make it work with javascript but I need to research checkboxes more first-->
+										<td><input type="text" name="isCarried" class="isCarried" value="{{inventory.isCarried.strip}}"/></td>
+										<!--
+											{% if inventory.isCarried == "true" %}
+												<input type="checkbox" checked name="isCarried" class="isCarried" value="true"/>
+											{% else %}
+												<input type="checkbox" name="isCarried" class="isCarried" value="true"/>
+											{% endif %}
+										-->
+										</td>
+									</tr>
+								</table>
+								<div class="tooltip">
+									<label for="items">Items: </label>
+									<span class="tooltiptext">Items follow a peculiar format: name, weight, quantity, tooltip</span>
+								</div>
+								<br/>
+								<textarea name="items" class="items" rows="4" cols="50">{% for item in inventory.items %}{{item.name.strip}}, {{item.weight.strip}}, {{item.amount.strip}}, {{item.note.strip}}&#013;&#010;{% endfor %}</textarea>
+							</fieldset>
+						{% endfor %}
+					</div>
+					<div class="tooltip">
+						<button type="button" onclick="AddInv()">+</button>
+						<span class="tooltiptext">Add an inventory. </span>
+					</div>
+					<div class="tooltip">
+						<button type="button">-</button>
+						<span class="tooltiptext">There is no real options to remove an inventory from the UI due to the data loss that may occur but you can remove one by deleting the inventory name in the inventories section of your character file. </span>
+					</div>
+				</fieldset>
+				<button type="button" onclick="validateAndSend()">Modify!</button>
+				<button type="button" onClick="location.href = '{{request.META.HTTP_REFERER|escape}}'">Cancel</button>
+			</fieldset>
+		</form>
+		
+		<script src="{% static 'WeightManagement/main.js' %}"></script>
+	</body>
+</html>

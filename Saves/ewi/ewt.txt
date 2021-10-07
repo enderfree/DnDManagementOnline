@@ -1,0 +1,8 @@
+name: ewt
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+wwe, 2, 4, ree
+

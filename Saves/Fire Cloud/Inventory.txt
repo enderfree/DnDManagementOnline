@@ -1,0 +1,19 @@
+name: Inventory
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+Silver rapier, 2, 1, 
+Cold iron dagger, 1, 1, 
+Dagger, 1, 1, 
+Astral Projection Scroll, 0, 1, 
+Crown of Stats Scroll, 0, 1, 
+Unidentified Scroll, 0, 1, Evard's Black Tentacles
+Long Bow, 2, 1, 
+Arrow, 0.05, 100, 
+CP, 0.02, 53, 
+SP, 0.02, 5, 
+EP, 0.02, 0, 
+GP, 0.02, 5, 
+PP, 0.02, 0, 

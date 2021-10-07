@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE html>
+     <!-- Samuel, Fauteux 
+     Description: A dnd management system optimized for weight and encumbrance
+	 Date: 08/11/2021                 -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="shortcut icon" href=""> <!--Need to remove this when I add an icon-->
+		<title>DnDManagement</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'WeightManagement/style.css' %}">
+		<style>
+			
+			form, fieldset{
+				display: inline;
+			}
+			
+			img{
+				width: 300px;
+				height: 300px;
+			}
+			
+			figure{
+				display: inline-block;
+				margin: 0px;
+			}
+			
+			ul{
+				padding: 10px;
+			}
+			
+			.content{
+				margin-left: 40px;
+				margin-right: 40px;
+			}
+			
+			#inventoryWeight{
+				list-style-type: none;
+			}
+
+		</style>
+	</head>
+	<body>
+		{% if messages %}
+			{% for message in messages %}
+				{{ message }} <!--one day I may wan't to handle the errors-->
+			{% endfor %}
+		{% endif %}
+		<label for='characters'>Character: </label>
+		<form method="POST">
+			{% csrf_token %}
+			<select name="characters" id="characters" onchange="this.form.submit()"> 
+				{% for character in characterList %}
+					<option value="{{character}}">{{character.name}}</option>
+				{% endfor %}
+			</select>
+		</form>
+		<button type="button" onclick="location.href = 'create';">Create!</button>
+		<button type="button" onclick="location.href = 'modify';">Modify</button>
+		<hr/>
+		<div class="content">
+			<input type="hidden" name="background" id="background" value="{{character.background}}"/>
+			<input type="hidden" name="fontColor" id="fontColor" value="{{character.font_color}}"/>
+			<script>
+				var background = document.getElementById('background').value;
+				var textColor = document.getElementById('fontColor').value;
+				document.body.style = "background: url(" + background + ") no-repeat; background-size: 100% 100%; color: " + textColor;
+			</script>
+			<table>
+				<tr>
+					<td>
+						<figure>
+							<figcaption id="str">Str = {{character.str}}</figcaption>
+							<img id="charPFP" src="{{character.pfp}}" alt="{{character.name.strip}}" onerror="if (this.src != 'error.jpg') this.src = 'https://bitsofco.de/content/images/2018/12/broken-1.png';"/>
+							<figcaption>Current speed: <span id="speed">{{character.base_speed}}</span></figcaption>
+						</figure>
+					</td>
+					<td style="vertical-align: top">
+						<p style="padding-top:1em">{{ character.desc }}</p>
+					</td>
+				</tr>
+			</table>
+			<script>
+				var mySelect = document.getElementById("characters");
+				var charName = document.getElementById("charPFP").alt;
+				for(var i = 0; i < mySelect.length; ++i){
+					if(mySelect.options[i].text == charName){
+						mySelect.options[i].selected = true;
+					}
+				}
+			</script>
+			<p id="weightHeadif"></p>
+			<fieldset>
+				<legend>Inventories</legend>
+				{% for inventory, weight in invWeights %}
+					<fieldset style="vertical-align: top; background: url({{inventory.image}}) no-repeat; background-size: 100% 100%">
+						<legend>{{inventory.name}}</legend>
+						<ul style="color: {{inventory.font_color}}">
+							{% for item in inventory.items %}
+								<div class="tooltip">
+									<li>{{item.amount}} {{item.name}} {{item.weight}}lb</li>
+									{% if item.note and item.note.strip %}
+										<span class="tooltiptext">{{item.note}}</span>
+									{% endif %}
+								</div>
+								<br/>
+							{% endfor %}
+							<br/>
+							<li>Weight: {{weight}}{% if inventory.max_capacity and inventory.max_capacity.strip %}/{{inventory.max_capacity}}{% endif %}lb</li>
+						</ul>
+					</fieldset>
+				{% endfor %}
+			</fieldset>
+			<input type="hidden" name="carryingMultipliyer" id="carryingMultipliyer" value="1"/>
+			<p>Total carried weight: <span id="carriedWeight">{{carriedWeight}}</span>/<span id="maxCarriedWeight"></span>lb</p>
+			<script>
+				var str = document.getElementById("str").innerHTML;
+				var carryingMultipliyer = parseFloat(document.getElementById("carryingMultipliyer").value);
+				
+				str = str.replace("Str = ", "");
+				strInt = parseInt(str);
+				
+				var maxCarriedWeight = strInt * 15 * carryingMultipliyer;
+				document.getElementById("maxCarriedWeight").innerHTML = maxCarriedWeight;
+				
+				var carriedWeight = parseFloat(document.getElementById("carriedWeight").innerHTML);
+				var speed = document.getElementById("speed");
+				var defaultSpeed = parseInt(speed.innerHTML);
+				var hedifTxt = document.getElementById("weightHeadif");
+				if(carriedWeight > maxCarriedWeight / 3){
+					speed.innerHTML = defaultSpeed - 10;
+					hedifTxt.innerHTML = '<b style="color: yellow">encumbered</b><br/>Speed: -10ft';
+				}
+				else if(carriedWeight > strInt * 10 * carryingMultipliyer){
+				speed.innerHTML = defaultSpeed - 20;
+					hedifTxt.style = "color: red";
+					hedifTxt.innerHTML = '<b style="color: orange">Heavily Encumbered</b><br/>Disadvantage on Str, Dex and Con! <br/>Speed: -20ft';
+				}
+				else if(carriedWeight > maxCarriedWeight){
+					if(defaultSpeed > 5){
+						speed.innerHTML = 5;
+					}
+					hedifTxt.innerHTML = '<b style="color: red">Over Capacited: you are not carrying your stuff anymore, you are dragging it!</b><br/>Disadvantage on Str, Dex and Con! <br/>Speed Max = 5ft';
+				}
+				else if(carriedWeight > maxCarriedWeight * 2){
+					if(defaultSpeed > 5){
+						speed.innerHTML = 5;
+					}
+					hedifTxt.innerHTML = '<b>Imobile: you are not even able to drag your stuff anymore!</b><br/>Disadvantage on Str, Dex and Con! <br/>Speed Max = 0ft';
+				}
+			</script>
+		</div>
+	</body>
+</html>

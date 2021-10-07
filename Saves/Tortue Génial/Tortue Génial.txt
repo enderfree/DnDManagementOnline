@@ -1,0 +1,8 @@
+name: Tortue Génial 
+pfp: https://i.pinimg.com/originals/b6/4f/fe/b64ffe7276b4579c348f6bea88c2bb44.png 
+background: https://c4.wallpaperflare.com/wallpaper/836/555/754/anime-anime-girls-love-live-yellow-wallpaper-thumb.jpg 
+font_color:  
+str: 19 
+base_speed: 30 
+desc:  
+inventories: Inventory, Shipper, Bob

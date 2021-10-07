@@ -1,0 +1,14 @@
+name: Inventory
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+Greatclub, 10, 1, Ygdrasil
+Javelins, 2, 4, 
+Small Knife, 1, 1, 
+Backpack, 5, 1, 
+Bedroll, 7, 1, 
+50ft of Hempen Rope, 10, 1, 
+Belt Pouch, 1, 1, 
+

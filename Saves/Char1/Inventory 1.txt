@@ -1,0 +1,8 @@
+name: Inventory 1
+image: 
+font_color: 
+max_capacity: 
+isCarried: true
+items: 
+Item1, 2, 3, test
+Item2, 0, 1, 

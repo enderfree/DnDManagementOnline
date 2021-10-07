@@ -1,0 +1,8 @@
+name: ewi 
+pfp:  
+background:  
+font_color:  
+str: 7 
+base_speed: 6 
+desc:  
+inventories: ew, ewt

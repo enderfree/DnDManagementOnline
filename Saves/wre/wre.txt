@@ -1,0 +1,8 @@
+name: wre 
+pfp:  
+background:  
+font_color:  
+str: 34 
+base_speed: 3 
+desc:  
+inventories: wwd, utyrdt, w, wd

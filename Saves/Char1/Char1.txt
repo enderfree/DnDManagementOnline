@@ -1,0 +1,8 @@
+name: Char1
+pfp: pfp
+background: 
+font_color: black
+str: 13
+base_speed: 30
+desc: note
+inventories: Inventory 1, Inventory 2
